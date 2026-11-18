@@ -2,13 +2,259 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Maquina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mueble Naranja</title>
   <link rel="stylesheet" href="maquina.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <h1 >Aquí va maquina todavía sin contenido</h1>
+  <main id="page-mueble">
 
-  <a href="index.html"> Volver a la habitación</a>
+    <!-- FOTO 1: HABITACIÓN COMPLETA -->
+    <!-- PON TU IMAGEN AQUÍ: en style.css busca #zoom-mueble y cambia 'fondo.jpg' -->
+    <div id="zoom-mueble"></div>
+
+    <!-- FOTO 2: MUEBLE DE CERCA -->
+    <!-- PON TU IMAGEN AQUÍ: en style.css busca #foto-mueble-cerca y cambia 'mueble.jpg' -->
+    <div id="foto-mueble-cerca"></div>
+
+    <!-- ZONA DE CAJONES: aquí van los 5 cajones falsos en CSS -->
+    <!-- Estos cajones tapan los cajones reales de tu foto -->
+    <div id="mueble-objetos">
+
+      <!-- CAJÓN 1 -->
+      <!-- La posición se edita en style.css en #cajon-1 -->
+      <div class="cajon" id="cajon-1">
+        <div class="cajon-frente">
+          <div class="cajon-manija"></div>
+        </div>
+      </div>
+
+      <!-- CAJÓN 2 -->
+      <div class="cajon" id="cajon-2">
+        <div class="cajon-frente">
+          <div class="cajon-manija"></div>
+        </div>
+      </div>
+
+      <!-- CAJÓN 3 -->
+      <div class="cajon" id="cajon-3">
+        <div class="cajon-frente">
+          <div class="cajon-manija"></div>
+        </div>
+      </div>
+
+      <!-- CAJÓN 4 -->
+      <div class="cajon" id="cajon-4">
+        <div class="cajon-frente">
+          <div class="cajon-manija"></div>
+        </div>
+      </div>
+
+      <!-- CAJÓN 5 -->
+      <div class="cajon" id="cajon-5">
+        <div class="cajon-frente">
+          <div class="cajon-manija"></div>
+        </div>
+      </div>
+
+      <!-- OBJETO QUE SE ASOMA DEL CAJÓN -->
+      <!-- Se mueve solo con código al cajón que quede abierto -->
+      <img id="objeto-asomado" src="" alt="Objeto">
+
+    </div>
+
+    <!-- BOTÓN PARA EMPEZAR LA ANIMACIÓN -->
+    <button id="btn-abrir-mueble" onclick="iniciarAnimacion()">ABRIR MUEBLE</button>
+
+    <!-- OBJETO EN GRANDE: cuando presionas el objeto asomado -->
+    <div id="objeto-grande">
+      <!-- Se llena solo con el PNG que salió al azar -->
+      <img id="foto-objeto-grande" src="" alt="Objeto en grande">
+
+<!-- CAPTION: el texto que pusiste arriba en la lista -->
+<p id="caption-objeto"></p>
+
+<!-- BOTÓN SOLO PARA LA CARTA: solo aparece si esCarta: true -->
+<button id="btn-abrir-carta" onclick="abrirCarta()">ABRIR CARTA</button>
+
+<button id="btn-guardar-objeto" onclick="guardarObjeto()">GUARDAR</button>
+
+<!-- GIFT: sale de la carta cuando la abres -->
+<!-- PON TU GIF AQUÍ: cambia 'gift.gif' por tu archivo -->
+<div id="gift-carta">
+  <img id="img-gift" src="assets/ella.mp4" alt="Sorpresa">
+  <p id="caption-gift">Para ti </p>
+</div>
+    </div>
+
+    <a href="index.html" id="volver-habitacion-2">VOLVER A LA HABITACIÓN</a>
+
+  </main>
+
+  <script>
+    // ============================================
+    // LISTA DE OBJETOS - AQUÍ EDITAS LOS NOMBRES
+    // ============================================
+    // PON TUS PNG AQUÍ: tienen que ser sin fondo
+    // PON TUS CAPTIONS AQUÍ: cada objeto tiene su foto, su texto y si es carta o no
+const TODOS_OBJETOS = [
+  { src: 'objeto1.png', caption: 'Este me lo dio en nuestro primer mes', esCarta: false },
+  { src: 'objeto2.png', caption: 'Me lo dio cuando...', esCarta: false },
+  { src: 'objeto3.png', caption: 'La carta que me escribió', esCarta: true }, // ← ESTA ES LA CARTA
+  { src: 'objeto4.png', caption: '...', esCarta: false },
+  { src: 'objeto5.png', caption: '...', esCarta: false },
+];
+
+    // Copia que vamos gastando para que no se repita hasta que salgan los 5
+    let objetosDisponibles = [...TODOS_OBJETOS];
+    let animando = false;
+    let cajonAbierto = null;
+
+    window.onload = function() {
+      // 1. Zoom a la foto lejos
+      document.getElementById('zoom-mueble').classList.add('zoom-activo');
+
+      // 2. A los 3s, muestra la foto del mueble de cerca
+      setTimeout(() => {
+        document.getElementById('foto-mueble-cerca').classList.add('visible');
+      }, 3000);
+
+      // 3. A los 3.8s, muestra los cajones y el botón
+      setTimeout(() => {
+        document.getElementById('mueble-objetos').classList.add('visible');
+        document.getElementById('btn-abrir-mueble').classList.add('visible');
+      }, 3800);
+    };
+
+    // ============================================
+    // ANIMACIÓN TIPO RULETA
+    // ============================================
+    function iniciarAnimacion() {
+      if (animando) return;
+      animando = true;
+
+      // Si se acabaron los objetos, volvemos a llenar la lista
+      if (objetosDisponibles.length === 0) {
+        objetosDisponibles = [...TODOS_OBJETOS];
+      }
+
+      // Esconde botón y objeto anterior
+      document.getElementById('btn-abrir-mueble').classList.remove('visible');
+      document.getElementById('objeto-asomado').classList.remove('visible');
+      cerrarTodosCajones();
+
+      const cajones = document.querySelectorAll('.cajon');
+      let vueltas = 0;
+      let velocidad = 120; // empieza rápido
+
+      // Elegimos desde ya cuál va a ser el cajón final y qué objeto va a salir
+      const indiceFinal = Math.floor(Math.random() * cajones.length);
+      const cajonFinal = cajones[indiceFinal];
+
+      // Elegimos objeto al azar sin repetir
+      const indiceObjeto = Math.floor(Math.random() * objetosDisponibles.length);
+      const objetoElegido = objetosDisponibles.splice(indiceObjeto, 1)[0];
+
+      function unaVuelta() {
+        // Cierra todos, abre uno al azar para el efecto de que se mueven
+        cerrarTodosCajones();
+        const aleatorio = cajones[Math.floor(Math.random() * cajones.length)];
+        aleatorio.classList.add('abierto');
+
+        vueltas++;
+        velocidad = velocidad + 35; // cada vez más lento, como ruleta
+
+        if (vueltas < 14) {
+          setTimeout(unaVuelta, velocidad);
+        } else {
+          // PARADA FINAL: solo queda abierto el cajón elegido
+          cerrarTodosCajones();
+          cajonFinal.classList.add('abierto');
+          cajonAbierto = cajonFinal;
+          mostrarObjetoAsomado(cajonFinal, objetoElegido);
+          animando = false;
+        }
+      }
+
+      unaVuelta();
+    }
+
+    function cerrarTodosCajones() {
+      document.querySelectorAll('.cajon').forEach(c => c.classList.remove('abierto'));
+    }
+
+    // ============================================
+    // OBJETO ASOMADO
+    // ============================================
+    function mostrarObjetoAsomado(cajon, objetoSrc) {
+      const objeto = document.getElementById('objeto-asomado');
+      objeto.src = objetoSrc;
+
+      // Copia la posición del cajón para que el objeto salga justo de ahí
+      // Usa los mismos valores de left/top/width que pusiste en CSS para ese cajón
+      const rectCajon = cajon.getBoundingClientRect();
+      const rectContenedor = document.getElementById('mueble-objetos').getBoundingClientRect();
+
+      // Posición en % para que funcione en cualquier pantalla
+      const leftPorciento = ((rectCajon.left - rectContenedor.left) / rectContenedor.width) * 100;
+      const topPorciento = ((rectCajon.top - rectContenedor.top) / rectContenedor.height) * 100;
+      const widthPorciento = (rectCajon.width / rectContenedor.width) * 100;
+
+      objeto.style.left = leftPorciento + '%';
+      objeto.style.top = topPorciento + '%';
+      objeto.style.width = widthPorciento + '%';
+
+      // Lo mostramos con animación de asomarse
+      setTimeout(() => {
+        objeto.classList.add('visible');
+      }, 200);
+    }
+
+    // Cuando le das click al objeto asomado, se hace grande
+    document.getElementById('objeto-asomado').addEventListener('click', function() {
+      const src = this.src;
+   // Muestra la foto, el caption y si es carta muestra el botón de abrir
+      const objActual = TODOS_OBJETOS.find(o => src.includes(o.src));
+      document.getElementById('foto-objeto-grande').src = src;
+      document.getElementById('caption-objeto').textContent = objActual ? objActual.caption : '';
+      document.getElementById('btn-abrir-carta').classList.toggle('visible', objActual && objActual.esCarta);
+      document.getElementById('objeto-grande').classList.add('visible');
+    });
+
+    // Guardar objeto: cierra todo y te deja volver a abrir el mueble
+    function guardarObjeto() {
+      document.getElementById('objeto-grande').classList.remove('visible');
+      document.getElementById('objeto-asomado').classList.remove('visible');
+      document.getElementById('foto-objeto-grande').style.display = 'block';
+      document.getElementById('foto-objeto-grande').classList.remove('abriendo');
+      document.getElementById('gift-carta').classList.remove('visible');
+      cerrarTodosCajones();
+      cajonAbierto = null;
+
+      // Si ya salieron los 5, el botón cambia de texto
+      if (objetosDisponibles.length === 0) {
+        document.getElementById('btn-abrir-mueble').textContent = 'VOLVER A EMPEZAR';
+      } else {
+        document.getElementById('btn-abrir-mueble').textContent = 'ABRIR OTRA VEZ';
+      }
+      document.getElementById('btn-abrir-mueble').classList.add('visible');
+    }
+
+    // Abre la carta y saca el gift
+function abrirCarta() {
+  // Esconde la carta y el botón
+  document.getElementById('foto-objeto-grande').classList.add('abriendo');
+  document.getElementById('btn-abrir-carta').classList.remove('visible');
+
+  // A los 600ms muestra el gift con animación
+  setTimeout(() => {
+    document.getElementById('foto-objeto-grande').style.display = 'none';
+    document.getElementById('gift-carta').classList.add('visible');
+  }, 600);
+}
+  </script>
+
 </body>
 </html>
