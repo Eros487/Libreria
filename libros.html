@@ -2,12 +2,94 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Libros</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Librero</title>
   <link rel="stylesheet" href="libros.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1 padding:40px;">Aquí va Libros - todavía sin contenido</h1>
 
-  <a href="index.html" >Volver a la habitación</a>
+  <main id="page-libros">
+
+    <!-- FOTO 1: HABITACIÓN COMPLETA (LEJOS) -->
+    <!-- PON TU IMAGEN AQUÍ: en style.css busca #zoom-librero y cambia 'fondo.jpg' -->
+    <div id="zoom-librero"></div>
+
+    <!-- FOTO 2: LIBRERO DE CERCA -->
+    <!-- PON TU IMAGEN AQUÍ: en style.css busca #foto-librero-cerca y cambia 'librero.jpg' -->
+    <!-- Esta es la foto que acabas de mandar -->
+    <div id="foto-librero-cerca"></div>
+
+    <!-- LOMOS CLICABLES: están sobre la foto del librero de cerca -->
+    <div id="librero-objetos">
+
+      <!-- LIBRO 1: SOPHIE FOSTER (izquierda) -->
+      <!-- PON TU IMAGEN AQUÍ: cambia 'libro1-abierto.jpg' por tu foto del libro 1 abierto -->
+      <button class="libro-lomo" id="lomo-libro-1" data-foto="libro1-abierto.jpg" onclick="sacarLibro(this)">DESHOJANDO MARGARITAS</button>
+
+      <!-- LIBRO 2: CARPINTERO (derecha) -->
+      <!-- PON TU IMAGEN AQUÍ: cambia 'libro2-abierto.jpg' por tu foto del libro 2 abierto -->
+      <button class="libro-lomo" id="lomo-libro-2" data-foto="libro2-abierto.jpg" onclick="sacarLibro(this)">CARTAS DE DESHAMOR</button>
+
+      <!-- CARTA 1 -->
+      <!-- PON TU IMAGEN AQUÍ: cambia 'carta1-abierta.jpg' por tu foto de la carta 1 -->
+      <button class="libro-lomo" id="lomo-carta-1" data-foto="carta2-abierta.jpg" onclick="sacarLibro(this)">DESEOS</button>
+
+      <!-- CARTA 2 -->
+      <!-- PON TU IMAGEN AQUÍ: cambia 'carta2-abierta.jpg' por tu foto de la carta 2 -->
+      <button class="libro-lomo" id="lomo-carta-2" data-foto="carta1-abierta.jpg" onclick="sacarLibro(this)">ANELOS</button>
+
+    </div>
+
+    <!-- LIBRO ABIERTO: muestra la foto del libro que sacaste -->
+    <div id="libro-abierto">
+      <!-- Esta imagen se llena sola con el data-foto del libro que presionaste -->
+      <img id="foto-libro-abierto" src="" alt="Libro abierto">
+      <button id="btn-cerrar-libro" onclick="guardarLibro()">GUARDAR</button>
+    </div>
+
+    <a href="index.html" id="volver-habitacion">← VOLVER A LA HABITACIÓN</a>
+
+  </main>
+
+  <script>
+    let libroActual = null;
+
+    window.onload = function() {
+      // 1. Zoom a la foto lejos
+      document.getElementById('zoom-librero').classList.add('zoom-activo');
+
+      // 2. A los 3s, muestra la foto del librero de cerca
+      setTimeout(() => {
+        document.getElementById('foto-librero-cerca').classList.add('visible');
+      }, 3000);
+
+      // 3. A los 3.8s, muestra los lomos clicables
+      setTimeout(() => {
+        document.getElementById('librero-objetos').classList.add('visible');
+      }, 3800);
+    };
+
+    // Saca el libro: anima y luego muestra la foto abierta
+    function sacarLibro(boton) {
+      libroActual = boton;
+      boton.classList.add('sacando');
+      setTimeout(() => {
+        const foto = boton.getAttribute('data-foto');
+        document.getElementById('foto-libro-abierto').src = foto;
+        document.getElementById('libro-abierto').classList.add('visible');
+      }, 600);
+    }
+
+    // Guarda el libro: cierra la foto y devuelve el lomo
+    function guardarLibro() {
+      document.getElementById('libro-abierto').classList.remove('visible');
+      if (libroActual) {
+        libroActual.classList.remove('sacando');
+        libroActual = null;
+      }
+    }
+  </script>
+
 </body>
 </html>

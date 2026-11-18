@@ -1,0 +1,163 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  overflow: hidden;
+}
+
+
+
+#page-libros {
+  position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background: #000;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}
+
+/* --- FOTO 1: HABITACIÓN LEJOS --- */
+/* PON TU IMAGEN AQUÍ ↓↓↓ */
+#zoom-librero {
+  position: absolute;
+  inset: 0;
+  background: url('assets/Habitacion.jpg') center / cover no-repeat; /* ← CAMBIA 'fondo.jpg' POR TU FOTO DE LA HABITACIÓN */
+  transform-origin: 15% 12%;
+  transform: scale(1);
+  transition: transform 3s ease-in-out;
+  border: none;
+  outline: none;
+}
+
+#zoom-librero.zoom-activo {
+  transform: scale(2.8);
+}
+
+/* --- FOTO 2: LIBRERO DE CERCA --- */
+/* PON TU IMAGEN AQUÍ ↓↓↓ */
+#foto-librero-cerca {
+  position: absolute;
+  inset: 0;
+  background: url('assets/librero.jpg') center / cover no-repeat; /* ← CAMBIA 'librero.jpg' POR LA FOTO QUE ME MANDASTE */
+  opacity: 0;
+  transition: opacity 1s ease;
+  border: none;
+  outline: none;
+  z-index: 10;
+}
+
+#foto-librero-cerca.visible {
+  opacity: 1;
+}
+
+/* --- LOMOS SOBRE EL LIBRERO --- */
+#librero-objetos {
+  position: absolute;
+  inset: 0;
+  display: none;
+  z-index: 20;
+}
+
+#librero-objetos.visible {
+  display: block;
+}
+
+.libro-lomo {
+  position: absolute;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  line-height: 1.6;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: transform 0.6s ease, box-shadow 0.3s;
+  /* Invisible pero clicable, para que se vea tu foto real del librero abajo */
+  background: transparent;
+  color: transparent;
+}
+
+/* Al pasar el mouse, se ilumina un poquito para que sepas que es clicable */
+.libro-lomo:hover {
+  transform: translateY(12px);
+  background: rgba(255,255,255,0.25);
+  color: #000000;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+}
+
+.libro-lomo.sacando {
+  transform: translateY(80px) scale(1.15);
+  z-index: 30;
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+/* POSICIONES SEGÚN TU FOTO REAL */
+/* Izquierda: Sophie Foster */
+#lomo-libro-1 { left: 33.6%; top: 30%; width: 1%; height: 36%; }
+/* Derecha: Carpintero */
+#lomo-libro-2 { left: 82%; top: 29%; width: 3%; height: 35%; }
+/* Izquierda: Diccionario Espasa */
+#lomo-carta-1 { left: 7.7%; top: 24%; width: 3%; height: 40%; }
+/* Derecha: García Márquez / Sherlock */
+#lomo-carta-2 { left: 43.8%; top: 26%; width: 15%; height: 5%; }
+
+/* --- LIBRO ABIERTO --- */
+#libro-abierto {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 50;
+}
+
+#libro-abierto.visible {
+  display: flex;
+}
+
+#foto-libro-abierto {
+  width: min(800px, 92%);
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+#btn-cerrar-libro {
+  margin-top: 16px;
+  background: #fff;
+  color: #000;
+  border: none;
+  outline: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+#volver-habitacion {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #888;
+  font-size: 11px;
+  font-family: 'Press Start 2P', monospace;
+  text-decoration: none;
+  z-index: 60;
+}
