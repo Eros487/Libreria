@@ -4,10 +4,66 @@
   <meta charset="UTF-8">
   <title>Cama</title>
   <link rel="stylesheet" href="cama.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Aquí va Libros - todavía sin contenido</h1>
+   <!-- CONTENEDOR PRINCIPAL DE LA PÁGINA CAMA -->
+  <main id="page-cama">
 
-  <a href="index.html"> Volver a la habitación</a>
+    <!-- CONTENEDOR DE LA FOTO: aquí ocurre el zoom -->
+    <div id="zoom-cama"></div>
+
+    <!-- BOTÓN INICIAL: el usuario debe hacer click para que suene la música -->
+    <button id="btn-sonar" style="display:none;" onclick="mostrarCreditos()">DORMIR</button>
+
+    <!-- CONTENEDOR DE CRÉDITOS: pantalla negra + texto -->
+    <div id="creditos">
+      <div id="creditos-texto">
+        <p>¿QUE PASA MI AMOR?</p>
+        <br><br>
+        <p>¿CREISTE QUE ERAS ESPECIAL?</p>
+        <br><br><br>
+        <p>NO TE MIENTAS CIELITO</p>
+        <br><br><br>
+        <p>SOLO ERES UNO MAS EN LA FILA</p>
+        <br><br>
+        <p>ENTIENDE QUE NO ERES SUFICIENTE PARA MI</p>
+        <br><br><br>
+        <p>YA NO TE AMO...</p>
+        <br><br><br>
+        <p>SUPERALO</p>
+        <br><br><br><br>
+        <p>¡YA DESPIERTA!</p>
+      </div>
+    </div>
+
+    <a href="index.html" id="volver-habitacion">DESPERTAR</a>
+
+    <!-- MÚSICA TRISTE: pon tu mp3 en la misma carpeta y cambia el nombre -->
+    <audio id="musica-triste" loop preload="auto">
+      <source src="assets/musica sad.mp3" type="audio/mpeg">
+    </audio>
+
+  </main>
+
+  <script>
+    window.onload = function() {
+      // Activa el zoom a la cama
+      document.getElementById('zoom-cama').classList.add('zoom-activo');
+
+      // Después de 4.5s (cuando ya terminó el zoom y está en negro)
+      // muestra el botón para entrar al sueño
+      setTimeout(() => {
+        document.getElementById('btn-sonar').style.display = 'block';
+      }, 200);
+    };
+
+    function mostrarCreditos() {
+      document.getElementById('btn-sonar').style.display = 'none';
+      document.getElementById('musica-triste').play();
+      document.getElementById('creditos').classList.add('visible');
+    }
+  </script>
+
 </body>
 </html>

@@ -1,0 +1,108 @@
+
+/* CONTENEDOR DE LA PÁGINA CAMA: ocupa toda la pantalla */
+#page-cama {
+ position: relative;
+  width: 100vw;
+  height: 100dvh;
+  background: #000;
+  overflow: hidden;
+  border: none;
+  outline: none;
+}
+
+/* CONTENEDOR DE LA FOTO: es la que va a hacer el zoom */
+#zoom-cama {
+  position: absolute;
+  inset: 0;
+  background: url('assets/Habitacion.jpg') center / cover no-repeat;
+  /* Punto de enfoque: 85% a la derecha, 80% abajo = donde está la cama */
+  transform-origin: 95% 80%;
+  /* Empieza sin zoom */
+  transform: scale(1);
+  /* Transición suave de 3.5 segundos para el acercamiento */
+  transition: transform 3.7s ease-in-out, opacity 1s ease;
+   border: none;
+  outline: none;
+}
+
+/* Cuando le agregamos esta clase con JS, hace el zoom */
+#zoom-cama.zoom-activo {
+  transform: scale(2.9); /* Qué tanto se acerca */
+  opacity: 0; /* Al final se desvanece a negro */
+}
+
+/* BOTÓN PARA EMPEZAR: necesario para que el navegador deje sonar la música */
+#btn-sonar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 16px 28px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10;
+  border: none;
+  outline: none;
+}
+
+
+/* CONTENEDOR DE CRÉDITOS: pantalla negra completa */
+#creditos {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  color: #ffffff;
+  display: none; /* Oculto hasta que termine el zoom */
+  overflow: hidden;
+  z-index: 20;
+}
+
+/* Cuando se activa, se muestra */
+#creditos.visible {
+  display: block;
+}
+
+/* TEXTO DE CRÉDITOS: es el que se mueve de abajo hacia arriba */
+#creditos-texto {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(600px, 85%);
+  text-align: center;
+  /* Fuente pixelada de videojuego */
+  font-family: 'Press Start 2P', monospace;
+  font-size: 15px;
+  line-height: 2.2;
+  /* Empieza abajo, fuera de pantalla */
+  top: 100%;
+  /* Animación: sube durante 30s y se queda */
+  animation: subir-creditos 26s linear forwards;
+}
+
+/* Animación de subida */
+@keyframes subir-creditos {
+  from { top: 100%; }
+  to { top: -120%; }
+}
+
+/* Link para volver */
+#volver-habitacion {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #888;
+  font-size: 12px;
+  font-family: 'Press Start 2P', monospace;
+  text-decoration: none;
+  z-index: 30;
+}
+body {
+  background: #000;
+  margin: 0;
+}
