@@ -11,37 +11,27 @@
 
   <main id="page-libros">
 
-    <!-- FOTO 1: HABITACIÓN COMPLETA (LEJOS) -->
-    <!-- PON TU IMAGEN AQUÍ: en style.css busca #zoom-librero y cambia 'fondo.jpg' -->
+  
     <div id="zoom-librero"></div>
 
-    <!-- FOTO 2: LIBRERO DE CERCA -->
-    <!-- PON TU IMAGEN AQUÍ: en style.css busca #foto-librero-cerca y cambia 'librero.jpg' -->
-    <!-- Esta es la foto que acabas de mandar -->
     <div id="foto-librero-cerca"></div>
 
-    <!-- LOMOS CLICABLES: están sobre la foto del librero de cerca -->
     <div id="librero-objetos">
 
       <!-- LIBRO 1: SOPHIE FOSTER (izquierda) -->
-      <!-- PON TU IMAGEN AQUÍ: cambia 'libro1-abierto.jpg' por tu foto del libro 1 abierto -->
       <button class="libro-lomo" id="lomo-libro-1" data-foto="libro1-abierto.jpg" onclick="sacarLibro(this)">DESHOJANDO MARGARITAS</button>
 
       <!-- LIBRO 2: CARPINTERO (derecha) -->
-      <!-- PON TU IMAGEN AQUÍ: cambia 'libro2-abierto.jpg' por tu foto del libro 2 abierto -->
       <button class="libro-lomo" id="lomo-libro-2" data-foto="libro2-abierto.jpg" onclick="sacarLibro(this)">CARTAS DE DESHAMOR</button>
 
       <!-- CARTA 1 -->
-      <!-- PON TU IMAGEN AQUÍ: cambia 'carta1-abierta.jpg' por tu foto de la carta 1 -->
       <button class="libro-lomo" id="lomo-carta-1" data-foto="carta2-abierta.jpg" onclick="sacarLibro(this)">DESEOS</button>
 
       <!-- CARTA 2 -->
-      <!-- PON TU IMAGEN AQUÍ: cambia 'carta2-abierta.jpg' por tu foto de la carta 2 -->
       <button class="libro-lomo" id="lomo-carta-2" data-foto="carta1-abierta.jpg" onclick="sacarLibro(this)">ANELOS</button>
 
     </div>
 
-    <!-- LIBRO ABIERTO: muestra la foto del libro que sacaste -->
     <div id="libro-abierto">
       <!-- Esta imagen se llena sola con el data-foto del libro que presionaste -->
       <img id="foto-libro-abierto" src="" alt="Libro abierto">
@@ -62,12 +52,12 @@
       // 2. A los 3s, muestra la foto del librero de cerca
       setTimeout(() => {
         document.getElementById('foto-librero-cerca').classList.add('visible');
-      }, 3000);
+      }, 1800);
 
       // 3. A los 3.8s, muestra los lomos clicables
       setTimeout(() => {
         document.getElementById('librero-objetos').classList.add('visible');
-      }, 3800);
+      }, 3000);
     };
 
     // Saca el libro: anima y luego muestra la foto abierta
