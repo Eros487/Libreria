@@ -78,7 +78,7 @@
 <!-- PON TU GIF AQUÍ: cambia 'gift.gif' por tu archivo -->
 <div id="gift-carta">
   <video id="img-gift" src="assets/ella.mp4" autoplay loop muted playsinline></video>
-  <p id="caption-gift">Tu mensaje aquí</p>
+  <p id="caption-gift">Ridiculo ella nunca te escribió una carta</p>
 </div>
 
     </div>
@@ -97,8 +97,8 @@ const TODOS_OBJETOS = [
   { src: 'objeto1.png', caption: 'Este me lo dio en nuestro primer mes', esCarta: false },
   { src: 'objeto2.png', caption: 'Me lo dio en mi cumpleaños', esCarta: false },
   { src: 'objeto3.png', caption: 'Una de tantas cartas', esCarta: true }, // ← ESTA ES LA CARTA
-  { src: 'objeto4.png', caption: '...', esCarta: false },
-  { src: 'objeto5.png', caption: '...', esCarta: false },
+  { src: 'objeto4.png', caption: 'Las flores que no le pude dar', esCarta: false },
+  { src: 'objeto5.png', caption: 'Soy alergico al chocolate', esCarta: false },
 ];
 
     // Copia que vamos gastando para que no se repita hasta que salgan los 5
@@ -113,13 +113,13 @@ const TODOS_OBJETOS = [
       // 2. A los 3s, muestra la foto del mueble de cerca
       setTimeout(() => {
         document.getElementById('foto-mueble-cerca').classList.add('visible');
-      }, 3000);
+      }, 1800);
 
       // 3. A los 3.8s, muestra los cajones y el botón
       setTimeout(() => {
         document.getElementById('mueble-objetos').classList.add('visible');
         document.getElementById('btn-abrir-mueble').classList.add('visible');
-      }, 3800);
+      }, 2500);
     };
 
     // ============================================
