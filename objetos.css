@@ -1,0 +1,192 @@
+/* ============================================ */
+/* CONFIGURACIÓN GENERAL                        */
+/* ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+#page-chat {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ============================================ */
+/* 1. TRANSICIÓN DESDE HABITACIÓN               */
+/* ============================================ */
+#zoom-habitacion {
+  position: absolute;
+  inset: 0;
+  background: url('assets/Habitacion.jpg') center / 100% 100% no-repeat;
+  /* ← AQUÍ EDITAS HACIA QUÉ PARTE DE LA HABITACIÓN HACE ZOOM (ej: donde esté el celular/PC) */
+  transform-origin: 10% 50%;
+  transform: scale(1);
+  transition: transform 2s ease-in-out;
+}
+
+#zoom-habitacion.zoom-activo {
+  transform: scale(2.2);
+}
+
+/* ============================================ */
+/* 2. ÚNICA IMAGEN DE FONDO DE ESTA SECCIÓN     */
+/* ============================================ */
+#fondo-escena-chat {
+  position: absolute;
+  inset: 0;
+  /* ← CAMBIA 'fondo-chat.jpg' POR TU IMAGEN DE FONDO */
+  background: url('assets/compu.jpg') center / cover no-repeat;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 10;
+}
+
+#fondo-escena-chat.visible {
+  opacity: 1;
+}
+
+/* ============================================ */
+/* 3. CUADRO PRINCIPAL DEL CHAT                 */
+/* ============================================ */
+#contenedor-chat {
+  position: absolute;
+  /* Centrado exacto en la mitad de la pantalla */
+  top: 50%;
+  left: 46%;
+  transform: translate(-50%, -45%) scale(0.95);
+  
+  /* Tamaño del cuadro de chat */
+  width: min(90vw, 450px);
+  height: 60vh;
+  
+  /* Estilo visual del cuadro */
+  background: rgba(20, 20, 28, 0.92);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 20;
+
+  /* Empieza invisible para aparecer con animación */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+#contenedor-chat.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ============================================ */
+/* ENCABEZADO DEL CHAT                          */
+/* ============================================ */
+.chat-header {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 14px 18px;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.estado-online {
+  width: 10px;
+  height: 10px;
+  background: #4ade80;
+  border-radius: 50%;
+}
+
+/* ============================================ */
+/* ÁREA DONDE SE APILAN LOS GLOBITOS            */
+/* ============================================ */
+.chat-mensajes {
+  flex: 1; /* Ocupa todo el espacio disponible del centro */
+  padding: 18px;
+  overflow-y: auto; /* Permite hacer scroll si pones muchos mensajes */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Espacio vertical entre cada globito */
+}
+
+/* Estilo base de TODOS los globitos */
+.globo {
+  max-width: 78%; /* Para que ningún globo ocupe todo el ancho */
+  padding: 12px 15px;
+  border-radius: 16px;
+  font-family: sans-serif; /* Fuente limpia para leer bien textos largos */
+  font-size: 14px;
+  line-height: 1.4;
+  word-wrap: break-word;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* GLOBITOS DE LA IZQUIERDA (Otra persona) */
+.globo.izquierda {
+  align-self: flex-start; /* Lo pega a la izquierda */
+  background: #2e2e3e;
+  color: #ffffff;
+  border-bottom-left-radius: 4px; /* Punta estilo globo de chat */
+}
+
+/* GLOBITOS DE LA DERECHA (Tú) */
+.globo.derecha {
+  align-self: flex-end; /* Lo pega a la derecha */
+  background: #ff5b8a; /* Color rosado a juego con tu botón de carta */
+  color: #ffffff;
+  border-bottom-right-radius: 4px; /* Punta estilo globo de chat */
+}
+
+/* ============================================ */
+/* PIE DEL CHAT (BOTÓN VOLVER)                  */
+/* ============================================ */
+.chat-footer {
+  padding: 12px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#btn-volver {
+  color: #aaa;
+  text-decoration: none;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  transition: color 0.2s ease;
+}
+
+#btn-volver:hover {
+  color: #fff;
+}
+
+#btn-terapia {
+  position: absolute;
+  bottom: 25px;  /* ← EDITA AQUÍ: distancia desde arriba (top) o abajo (bottom) */
+  right: 25px;   /* ← EDITA AQUÍ: distancia desde la izquierda (left) o derecha (right) */
+  background: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  text-decoration: none;
+  z-index: 30;
+}

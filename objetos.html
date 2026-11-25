@@ -2,13 +2,90 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Objetos</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat en la Habitación</title>
+  <!-- Fuente retro igual a la de tu otra sección -->
+  <link href="https://googleapis.com" rel="stylesheet">
+  <!-- Conexión con tu archivo CSS -->
   <link rel="stylesheet" href="objetos.css">
 </head>
 <body>
-    
-  <h1>Aquí va objetos todavía sin contenido</h1>
 
-  <a href="index.html" > Volver a la habitación</a>
+  <!-- CONTENEDOR PRINCIPAL DE TODA LA ESCENA -->
+  <div id="page-chat">
+
+    <!-- 1. FOTO DE LA HABITACIÓN (Hace zoom al entrar) -->
+    <div id="zoom-habitacion"></div>
+
+    <!-- 2. FOTO DE FONDO DE LA NUEVA ESCENA (Ej: pantalla o escritorio) -->
+    <div id="fondo-escena-chat"></div>
+
+    <!-- 3. CONTENEDOR DEL CHAT (Aparece después del zoom) -->
+    <div id="contenedor-chat">
+      
+      <a href="terapia.html" id="btn-terapia">IR A TERAPIA</a>
+
+      <!-- Barra superior del chat -->
+      <div class="chat-header">
+        <span class="estado-online"></span>
+        <span>Chat</span>
+      </div>
+
+      <!-- Zona donde van los globitos de diálogo -->
+      <div class="chat-mensajes" id="lista-mensajes">
+        
+        <!-- GLOBITO IZQUIERDA (La otra persona) -->
+        <div class="globo izquierda">
+          Por que tan perdido cielo?
+        </div>
+
+        <!-- GLOBITO DERECHA (Tú) -->
+        <div class="globo derecha">
+          Ya me dejaste muy en claro que lugar ocupo en tu vida
+        </div>
+
+        <!-- OTRO GLOBITO IZQUIERDA -->
+        <div class="globo izquierda">
+          No actues tan digno que tus cuentas fake me las sé de memoria
+        </div>
+
+        <!-- OTRO GLOBITO DERECHA -->
+        <div class="globo derecha">
+          Que quieres?? no te he dado suficiente?
+        </div>
+
+        <div class="globo izquierda">
+         veamonos
+        </div>
+
+      </div>
+
+      <!-- Barra inferior decorativa o con botón -->
+      <div class="chat-footer">
+        <a href="index.html" id="btn-volver">← VOLVER A LA HABITACIÓN</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- SCRIPT PARA CONTROLAR LA TRANSICIÓN AL CARGAR LA PÁGINA -->
+  <script>
+    window.onload = function() {
+      // 1. Inicia el zoom sobre la foto de la habitación
+      document.getElementById('zoom-habitacion').classList.add('zoom-activo');
+
+      // 2. A los 1.8 segundos, aparece suavemente la imagen de fondo del chat
+      setTimeout(() => {
+        document.getElementById('fondo-escena-chat').classList.add('visible');
+      }, 1800);
+
+      // 3. A los 2.5 segundos, aparece el cuadro del chat en el centro
+      setTimeout(() => {
+        document.getElementById('contenedor-chat').classList.add('visible');
+      }, 2500);
+    };
+  </script>
+
 </body>
 </html>
