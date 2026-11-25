@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0a0a0a;
+  font-family: 'Press Start 2P', monospace;
+}
+
+#terapia {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  background: #0a0a0a;
+  padding: 20px;
+}
+
+.oculto {
+  display: none !important;
+}
+
+.titulo-terapia {
+  font-size: 22px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.instruccion {
+  font-size: 10px;
+  color: #aaa;
+  margin-bottom: 30px;
+  line-height: 1.8;
+}
+
+
+.ayuda {
+  font-size: 9px;
+  color: #777;
+  margin-top: 18px;
+}
+
+/* --- FASE RESPIRA --- */
+
+#fase-respira {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#circulo-respira {
+  --animate-duration: 4s;
+  width: 200px;
+  height: 200px;
+  background: #ffe3eb;
+  border-radius: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 20px 0 24px 0;
+  box-shadow: 0 0 40px rgba(255, 91, 138, 0.6);
+}
+
+.frase-respira {
+  font-size: 20px;
+  line-height: 2;
+  color: #fff;
+  margin-bottom: 26px;
+}
+
+.btn-terapia {
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-volver {
+  background: #ff5b8a;
+  color: #fff;
+  margin-top: 10px;
+}
+
+#final-terapia {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.mensaje-final {
+  font-size: 12px;
+  line-height: 2.2;
+  margin-bottom: 20px;
+}
+
+/* --- PENSAMIENTOS EN VARIOS LUGARES --- */
+#fase-pensamiento {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+}
+
+.pensamiento {
+  position: absolute;
+  font-size: 13px;
+  line-height: 1.6;
+  background: #1a1a1a;
+  border: 2px solid #ff5b8a;
+  padding: 16px 14px;
+  border-radius: 14px;
+  cursor: pointer;
+  max-width: 240px;
+}
+
+/* CAMBIA LOS % PARA MOVERLOS DONDE QUIERAS */
+.p1 { left: 10%; top: 30%; }
+.p2 { right: 30%; top: 22%; }
+.p3 { left: 80%; bottom: 22%; }
+.p4 { right: 50%; bottom: 30%; }
+
+.pensamiento.roto {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+#contador {
+  color: #ff5b8a;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terapia</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="terapia.css">
+</head>
+<body>
+
+  <div id="terapia">
+
+    <!-- FASE 1: EL PENSAMIENTO QUE ATORMENTA -->
+    <div id="fase-pensamiento">
+      <h2 class="titulo-terapia animate__animated animate__fadeInDown">Terapia</h2>
+
+    <p class="pensamiento p1 animate__animated animate__shakeX animate__infinite">"¿Por qué me hizo esto?"</p>
+    <p class="pensamiento p2 animate__animated animate__shakeX animate__infinite animate__delay-1s">"Yo le di todo"</p>
+    <p class="pensamiento p3 animate__animated animate__shakeX animate__infinite animate__delay-2s">"¿Y si fui yo el problema?"</p>
+    <p class="pensamiento p4 animate__animated animate__shakeX animate__infinite">"¿Porque no me ama?"</p>
+
+    <p class="ayuda">Toca todos los pensamientos para soltarlos <span id="contador">0 / 4</span></p>
+    </div>
+
+    <!-- FASE 2: RESPIRA CONMIGO -->
+    <div id="fase-respira" class="oculto">
+      <h2 class="titulo-terapia animate__animated animate__fadeInDown">Respira conmigo...</h2>
+
+      <div id="circulo-respira" class="animate__animated animate__pulse animate__infinite"></div>
+
+      <p class="frase-respira animate__animated animate__fadeInUp animate__delay-1s">Inhala... Exhala... Ya pasó</p>
+
+      <button id="btn-mejor" class="btn-terapia oculto">Ya me siento mejor</button>
+
+      <!-- FINAL -->
+      <div id="final-terapia" class="oculto">
+        <p class="mensaje-final animate__animated animate__heartBeat">Ya estás sanando</p>
+        <a href="index.html" class="btn-terapia btn-volver animate__animated animate__fadeInUp">Volver al cuarto</a>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  const pensamientos = document.querySelectorAll('.pensamiento');
+  const contador = document.getElementById('contador');
+  const fasePensamiento = document.getElementById('fase-pensamiento');
+  const faseRespira = document.getElementById('fase-respira');
+  const btnMejor = document.getElementById('btn-mejor');
+  const finalTerapia = document.getElementById('final-terapia');
+
+  let rotos = 0;
+
+  // --- FASE 1: ROMPER TODOS LOS PENSAMIENTOS ---
+  pensamientos.forEach(p => {
+    p.addEventListener('click', () => {
+      if (p.classList.contains('roto')) return; // no contar 2 veces el mismo
+
+      p.classList.remove('animate__shakeX', 'animate__infinite');
+      p.classList.add('animate__hinge', 'roto');
+      rotos++;
+      contador.textContent = rotos + ' / ' + pensamientos.length;
+
+      // SOLO AVANZA CUANDO YA ROMPIÓ TODOS
+      if (rotos === pensamientos.length) {
+        setTimeout(() => {
+          fasePensamiento.classList.add('oculto');
+          faseRespira.classList.remove('oculto');
+          faseRespira.classList.add('animate__animated', 'animate__fadeIn');
+
+// EL BOTÓN APARECE DESPUÉS DE 8 SEGUNDOS
+        setTimeout(() => {
+             btnMejor.classList.remove('oculto');
+             btnMejor.classList.add('animate__animated', 'animate__fadeInUp');
+            }, 8000);
+        }, 1000);
+      }
+    });
+  });
+
+  // --- FASE 2: YA ME SIENTO MEJOR ---
+  btnMejor.addEventListener('click', () => {
+    btnMejor.classList.add('oculto');
+    finalTerapia.classList.remove('oculto');
+  });
+</script>
+
+</body>
+</html>
