@@ -77,9 +77,10 @@
 <!-- GIFT: sale de la carta cuando la abres -->
 <!-- PON TU GIF AQUÍ: cambia 'gift.gif' por tu archivo -->
 <div id="gift-carta">
-  <img id="img-gift" src="assets/ella.mp4" alt="Sorpresa">
-  <p id="caption-gift">Para ti </p>
+  <video id="img-gift" src="assets/ella.mp4" autoplay loop muted playsinline></video>
+  <p id="caption-gift">Tu mensaje aquí</p>
 </div>
+
     </div>
 
     <a href="index.html" id="volver-habitacion-2">VOLVER A LA HABITACIÓN</a>
@@ -94,8 +95,8 @@
     // PON TUS CAPTIONS AQUÍ: cada objeto tiene su foto, su texto y si es carta o no
 const TODOS_OBJETOS = [
   { src: 'objeto1.png', caption: 'Este me lo dio en nuestro primer mes', esCarta: false },
-  { src: 'objeto2.png', caption: 'Me lo dio cuando...', esCarta: false },
-  { src: 'objeto3.png', caption: 'La carta que me escribió', esCarta: true }, // ← ESTA ES LA CARTA
+  { src: 'objeto2.png', caption: 'Me lo dio en mi cumpleaños', esCarta: false },
+  { src: 'objeto3.png', caption: 'Una de tantas cartas', esCarta: true }, // ← ESTA ES LA CARTA
   { src: 'objeto4.png', caption: '...', esCarta: false },
   { src: 'objeto5.png', caption: '...', esCarta: false },
 ];
@@ -181,9 +182,9 @@ const TODOS_OBJETOS = [
     // ============================================
     // OBJETO ASOMADO
     // ============================================
-    function mostrarObjetoAsomado(cajon, objetoSrc) {
+    function mostrarObjetoAsomado(cajon, objetoElegido) {
       const objeto = document.getElementById('objeto-asomado');
-      objeto.src = objetoSrc;
+      objeto.src = objetoElegido.src;
 
       // Copia la posición del cajón para que el objeto salga justo de ahí
       // Usa los mismos valores de left/top/width que pusiste en CSS para ese cajón
@@ -237,16 +238,20 @@ const TODOS_OBJETOS = [
 
     // Abre la carta y saca el gift
 function abrirCarta() {
-  // Esconde la carta y el botón
   document.getElementById('foto-objeto-grande').classList.add('abriendo');
   document.getElementById('btn-abrir-carta').classList.remove('visible');
 
-  // A los 600ms muestra el gift con animación
   setTimeout(() => {
     document.getElementById('foto-objeto-grande').style.display = 'none';
     document.getElementById('gift-carta').classList.add('visible');
+    
+    // Reinicia y reproduce el video
+    const video = document.getElementById('img-gift');
+    video.currentTime = 0;
+    video.play();
   }, 600);
 }
+
   </script>
 
 </body>
